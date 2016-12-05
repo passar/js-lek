@@ -9,9 +9,9 @@ export default {
     ],
     target: 'web',
     output: {
-    path: path.resolve(__dirname, 'src'),
-    publicPath: '/',
-    filename: 'bundle.js'
+        path: path.resolve(__dirname, 'src'),
+        publicPath: '/',
+        filename: 'bundle.js'
     },
     plugins: [],
     module: {
