@@ -14,13 +14,13 @@ $(document).ready(function() {
             //      console.log(data.records[i].fields)
 
             var items =""
-//            var items =[]
+//          var items =[]
 
             $.each(data.records[i].fields, function(key, val) {
 
                 var platsen = data.records[i].fields.plats
                 // platsen i filen ligger i allt[0].fields.plats
-
+                $("<ul/>", {platsen}).appendTo("body")
 
 //                items.push("<li id='" + key + "'>" + data.records[i].fields.plats + ": " + key + ": " + val + "</li>")
                 items=("<li id='" + key + "'>" + data.records[i].fields.plats + ": " + key + ": " + val + "</li>")
