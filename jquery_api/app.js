@@ -1,6 +1,11 @@
 // studera vad som kommer från sidan och gör det globalt tillgängligt nedan
 var allt
 var url
+//    Om vi hittar position så vill vi ha den såklart istället för standardvärdet ovan
+// samt förbereder förändring av avståndet
+var urlLat, urlLong
+var urlAvstand = 2000
+
 $(function () {
     var options = {
         enableHighAccuracy: true,
@@ -12,47 +17,41 @@ $(function () {
         var crd = pos.coords;
       
         console.log('Your current position is:');
-        console.log(`Latitude : ${crd.latitude}`);
-        console.log(`Longitude: ${crd.longitude}`);
+          console.log(`Latitude : ${crd.latitude}`);
+          urlLat = crd.latitude
+          console.log(`Longitude: ${crd.longitude}`);
+          urlLong = crd.longitude
         console.log(`More or less ${crd.accuracy} meters.`);
       }
       
       function error(err) {
         console.warn(`ERROR(${err.code}): ${err.message}`);
       }
-      
-      navigator.geolocation.getCurrentPosition(success, error, options);
-      
-    // Skapa en platsbaserad url. Detta är grundformen och kommer att vara utgångspunkten
-    // var url // = "https://helsingborg.opendatasoft.com/api/records/1.0/search/?dataset=offentliga-toaletter&facet=plats&facet=sasong&facet=oppettider&facet=avgift&facet=antal_dam&facet=antal_herr&facet=antal_unisex&facet=antal_urinoar&facet=antal_hwc&facet=hwc_larm&facet=skotbord&geofilter.distance=56.0467%2C12.6944%2C2000"
-    
-    //    Om vi hittar position så vill vi ha den såklart istället för standardvärdet ovan
-        // samt förbereder förändring av avståndet
-    var urlLat, urlLong
-    var urlAvstand = 2000
 
-    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error, options);
+
+    if (urlLat != undefined){
+        url = "https://helsingborg.opendatasoft.com/api/records/1.0/search/?dataset=offentliga-toaletter&facet=plats&facet=sasong&facet=oppettider&facet=avgift&facet=antal_dam&facet=antal_herr&facet=antal_unisex&facet=antal_urinoar&facet=antal_hwc&facet=hwc_larm&facet=skotbord&geofilter.distance=" + urlLat + "%2C" + urlLong + "%2C" + urlAvstand;
+    } else {
+    // Skapa en platsbaserad url. Detta är grundformen och kommer att vara utgångspunkten
+        url = "https://helsingborg.opendatasoft.com/api/records/1.0/search/?dataset=offentliga-toaletter&facet=plats&facet=sasong&facet=oppettider&facet=avgift&facet=antal_dam&facet=antal_herr&facet=antal_unisex&facet=antal_urinoar&facet=antal_hwc&facet=hwc_larm&facet=skotbord&geofilter.distance=56.0467%2C12.6944%2C2000";
+    }
+
+/*    if (navigator.geolocation) {
     
         navigator.geolocation.getCurrenPosition(function (position) {
             urlLat = position.coords.latitude
             urlLong = position.coords.longitude
-
-            url = "https://helsingborg.opendatasoft.com/api/records/1.0/search/?dataset=offentliga-toaletter&facet=plats&facet=sasong&facet=oppettider&facet=avgift&facet=antal_dam&facet=antal_herr&facet=antal_unisex&facet=antal_urinoar&facet=antal_hwc&facet=hwc_larm&facet=skotbord&geofilter.distance=" + urlLat + "%2C" + urlLong + "%2C" + urlAvstand
-   
+*/
+    //        url = "https://helsingborg.opendatasoft.com/api/records/1.0/search/?dataset=offentliga-toaletter&facet=plats&facet=sasong&facet=oppettider&facet=avgift&facet=antal_dam&facet=antal_herr&facet=antal_unisex&facet=antal_urinoar&facet=antal_hwc&facet=hwc_larm&facet=skotbord&geofilter.distance=" + urlLat + "%2C" + urlLong + "%2C" + urlAvstand
+  /* 
         })  
     }
-
+*/
 
 
     // $.getJSON("offentliga-toaletter.json", function(data) {
     // filen är helt annorlunda
-
-
-
-
-
-
-
 
 $.getJSON(url, function (data) {
 
@@ -83,10 +82,7 @@ $.getJSON(url, function (data) {
                 html: items
 
             }).appendTo("body");
-
         })
-
-
     }
 })
 })
