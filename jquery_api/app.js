@@ -64,11 +64,7 @@ function hamtaData(webadress) {
             //      console.log(i)
             //      console.log(data.records[i].fields)
 
-            var platsen
-            //            var items = ""
-            //var grejer = []
             var items = []
-
             var itemsLength = Object.keys(allt.records[i].fields).length
             //  console.log(itemsLength)
 
@@ -82,23 +78,35 @@ function hamtaData(webadress) {
 
 
 
-
-            platsen = data.records[i].fields.plats
-            // platsen i filen ligger i allt[0].fields.plats
-
-            //  grejer.push("<li id='" + key + "'>" + data.records[i].fields.plats + ": " + key + ": " + val + "</li>")
             $.each(data.records[i].fields, function (key, val) {
                 grejer = ("<li id='" + key + "'>" + data.records[i].fields.plats + ": " + key + ": denna " + val + "</li>")
             })
 
-
-
-            //objektlängden får göra om det så att det blir rätt senare
+            // Vissa offentliga toaletter har en avgift
             var avgiften = ""
-if (kortare.avgift != undefined){
-    avgiften = "<li> Avgift: " + kortare.avgift + "</li>"
+            if (kortare.avgift != undefined) {
+                avgiften = "<li> Avgift: " + kortare.avgift + "</li>"
+            }
 
-}
+            // Tiden kan visas snyggare. Fixa skriva till hur långt kvar till att den stänger/öppnar.
+            oppet = kortare.oppettider
+            // Gör en funktion för att lösa båda problemen
+            function addTecken(strang, position, tecken) {
+                var a = strang
+                var b = tecken
+                var position
+                return [a.slice(0, position), b, a.slice(position)].join('');
+            }
+
+            if (oppet.charAt(0) == 0) {
+                oppet = addTecken(oppet, 2, "-")
+            }
+            if (oppet.charAt(0) == "d") {
+                oppet = addTecken(oppet, 6, "\ ")
+            }
+
+            var platsen = kortare.plats
+
             $("<div>", {
                 "class": "container card-deck mb-3 text-left",
                 html:
@@ -107,10 +115,8 @@ if (kortare.avgift != undefined){
                     <h4 class="my-0 font-weight-normal">'+ platsen + "</h4> \
                 </div> \
 <div class=\"card-body\">\
-<ul class=\"list-unstyled mt-3 mb-4\"> \
-<li> "+
-                    "Öppettider: " + kortare.oppettider +
-                    "</li>" +
+<ul class=\"list-unstyled mt-3 mb-4\">"+
+                    "<li> Öppettider: " + oppet + "</li>" +
                     "<li> Säsång: " + kortare.sasong + "</li>" + avgiften +
                     "<!--<li> \
 lat och longitud: " + kortare.geo_point_2d +
@@ -123,27 +129,7 @@ lat och longitud: " + kortare.geo_point_2d +
           </a>\
         </div>\
       </div>`
-
-
-
             }).appendTo("body");
-
-
-            /*        $("<ul/>", {
-                    "class": platsen,
-              //      html: items.join( "" )
-                   // html: items
-
-                }).appendTo("body");
-
-         $("<ul/>", {
-                "class": platsen,
-           //     html: items.join( "" )
-//                html: grejer
-
-            }).appendTo("body");
-*/
-            //    })  
         }
     })
 }
