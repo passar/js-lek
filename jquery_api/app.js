@@ -108,7 +108,7 @@ function hamtaData(webadress) {
             var platsen = kortare.plats
 
             $("<div>", {
-                "class": "container card-deck mb-3 text-left",
+                "class": "card-deck mb-3 text-left",
                 html:
                     '<div class="card mb-4 shadow-sm"> \
                 <div class="card-header"> \
@@ -117,7 +117,7 @@ function hamtaData(webadress) {
 <div class=\"card-body\">\
 <ul class=\"list-unstyled mt-3 mb-4\">"+
                     "<li> Öppettider: " + oppet + "</li>" +
-                    "<li> Säsång: " + kortare.sasong + "</li>" + avgiften +
+                    "<li> Säsong: " + kortare.sasong + "</li>" + avgiften +
                     "<!--<li> \
 lat och longitud: " + kortare.geo_point_2d +
                     "</li> -->" +
@@ -129,7 +129,7 @@ lat och longitud: " + kortare.geo_point_2d +
           </a>\
         </div>\
       </div>`
-            }).appendTo("body");
+            }).appendTo("article");
         }
     })
 }
