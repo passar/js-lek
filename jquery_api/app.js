@@ -1,13 +1,13 @@
 // studera vad som kommer från sidan och gör det globalt tillgängligt nedan
 var allt
 var url
-//    Om vi hittar position så vill vi ha den såklart istället för standardvärdet ovan
+// Om vi hittar position så vill vi ha den såklart istället för standardvärdet ovan
 // samt förbereder förändring av avståndet
 var urlAvstand = 1500
 // var urlAvstand = 200000
 
 $(function () {
-    /* // denna här hämtar adress på ip vilket är snabbare men precitionen är så dålig samt att tjänsten var nere en kväll
+    // denna här hämtar adress på ip vilket är snabbare men precitionen är så dålig samt att tjänsten var nere en kväll
     $.getJSON("http://ip-api.com/json/?fields=192", function (plats) {
         ipPlats = plats
         console.log(plats.lon + " " + plats.lat)
@@ -16,15 +16,14 @@ $(function () {
     }, hamtaPosGeo()) 
 
     // ovan position vill inte fungera längre
-// */
-    hamtaPosGeo()
+// hamtaPosGeo()
 
     $("#geoKnapp").click(function () {
         console.log("tryckt på uppdatera")
+        // lägg till en rensa artikeln
+        $("article").replaceWith('<article class="container">')
         hamtaPosGeo()
     });
-
-
 })
 
 function hamtaPosGeo() {
@@ -60,27 +59,25 @@ function hamtaData(webadress) {
 
         allt = data // ger mig tillgång till att felsöka datan som kommer in.
 
-        for (let i = 0; i <= data.records.length - 1; i++) {
-            //      console.log(i)
-            //      console.log(data.records[i].fields)
+        for (let i = 0; i < data.records.length; i++) {
+            // start here
+            // compare time of client with opengin hours and season
+            // opening hours = check time
+            // make client time visible
+            // get the opeining season
+            // split the string of the season
+            // calculate tha season range
+            // convert the clients month
+
+            // compare clients month to season range
+            // if ( the date or time is out of range ignore) {
+            // if there are no toilets widen the range of search
+            // do search again with the new value
 
             var items = []
-            var itemsLength = Object.keys(allt.records[i].fields).length
-            //  console.log(itemsLength)
+            var itemsLength = Object.keys(data.records[i].fields).length
 
-            var kortare = allt.records[i].fields
-
-            for (var j = 0; j < itemsLength - 1; j++) {
-                //                //   console.log(j)
-
-                items.push("<li>" + kortare.dist + ": " + + ": " + + "</li>")
-            }
-
-
-
-            $.each(data.records[i].fields, function (key, val) {
-                grejer = ("<li id='" + key + "'>" + data.records[i].fields.plats + ": " + key + ": denna " + val + "</li>")
-            })
+            var kortare = data.records[i].fields
 
             // Vissa offentliga toaletter har en avgift
             var avgiften = ""
@@ -118,9 +115,6 @@ function hamtaData(webadress) {
 <ul class=\"list-unstyled mt-3 mb-4\">"+
                     "<li> Öppettider: " + oppet + "</li>" +
                     "<li> Säsong: " + kortare.sasong + "</li>" + avgiften +
-                    "<!--<li> \
-lat och longitud: " + kortare.geo_point_2d +
-                    "</li> -->" +
                     "</ul>" +
                     "<a href=\'https://www.google.com/maps/search/?api=1&query=" + kortare.geo_point_2d + "'" +
                     `   <button type="button" class="btn btn-lg btn-block btn-outline-primary"> \
