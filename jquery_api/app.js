@@ -68,7 +68,7 @@ function hamtaData(webadress) {
             // split the string of the season
             // calculate tha season range
             // convert the clients month
-
+            var dettaNu = new Date().getMonth()
             // compare clients month to season range
             // if ( the date or time is out of range ignore) {
             // if there are no toilets widen the range of search
@@ -95,15 +95,45 @@ function hamtaData(webadress) {
                 return [a.slice(0, position), b, a.slice(position)].join('');
             }
 
-            if (oppet.charAt(0) == 0) {
+            // allt.records[4].fields.sasong = aprsep
+            // dela till [apr, sep]
+
+            var manader = delaDatum("aprsep", 3)
+
+            function delaDatum(strang, position){
+                var a = strang
+                var position
+                return [a.slice(0,position), a.slice(position)]
+
+                /*
+                var forstaOrd = []
+                var andraOrd
+                forstaOrd.push(strang.charAt(0)) // a
+                forstaOrd.push(strang.charAt(1)) // p
+                forstaOrd.push(strang.charAt(2)) // r
+
+                andraOrd[0] = strang.charAt(3) // s
+                andraOrd[1] = strang.charAt(4) // e
+                andraOrd[2] = strang.charAt(5) // e
+
+                return [forstaOrd,andraOrd] // [apr, se]
+            */
+            }
+
+
+            if (oppet.charAt(0) == 0) { // 0720 -> 07-20
                 oppet = addTecken(oppet, 2, "-")
             }
-            if (oppet.charAt(0) == "d") {
+            if (oppet.charAt(0) == "d") { // dygnetrunt -> dygnet runt
                 oppet = addTecken(oppet, 6, "\ ")
+            }
+            var sasongen = kortare.sasong
+            if (sasongen == "helaaret") { // helaaret -> Hela året
+                sasongen = "Hela året"
             }
 
             var platsen = kortare.plats
-
+            // här skrivs varje datainlägg
             $("<div>", {
                 "class": "card-deck mb-3 text-left",
                 html:
@@ -114,7 +144,7 @@ function hamtaData(webadress) {
 <div class=\"card-body\">\
 <ul class=\"list-unstyled mt-3 mb-4\">"+
                     "<li> Öppettider: " + oppet + "</li>" +
-                    "<li> Säsong: " + kortare.sasong + "</li>" + avgiften +
+                    "<li> Säsong: " + sasongen + "</li>" + avgiften +
                     "</ul>" +
                     "<a href=\'https://www.google.com/maps/search/?api=1&query=" + kortare.geo_point_2d + "'" +
                     `   <button type="button" class="btn btn-lg btn-block btn-outline-primary"> \
