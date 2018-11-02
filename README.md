@@ -5,4 +5,7 @@ Inehåller ett antal olika löst påbörjade projekt och kurser jag ger eller g�
 Går en liten online kurs.
 
 # [jquery_api](jquery_api)
-Testar olika funktioner som finns där.
+Gjort en sida som hämtar öppna offentlia toaletter från helsingborgs öppna api.
+
+# [angularjs](angularjs)
+Testar angularjs
