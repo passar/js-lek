@@ -19,7 +19,9 @@ $(function () {
     // hamtaPosGeo()
 
     $("#geoKnapp").click(function () {
-        console.log("tryckt på uppdatera")
+	// Om användaren är för långt borta lägg till en del sträcka.
+	urlAvstand += 2000
+        console.log("tryckt på uppdatera. Avstånd: " + urlAvstand)
         // lägg till en rensa artikeln
         $("article").replaceWith('<article class="container">')
         hamtaPosGeo()
